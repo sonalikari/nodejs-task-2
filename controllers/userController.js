@@ -26,3 +26,19 @@ exports.registerUser = async (req, res) => {
         res.status(400).json({ error: "Error occurred! Try Again" });
     }
 };
+
+exports.loginUser = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        const user = await User.findOne({ username });
+
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(400).json({ error: 'Invalid username or password' });
+        }
+        res.status(200).json({ access_token: user._id });
+    } catch (error) {
+        res.status(500).json({ error: 'Error while log in the user' });
+    }
+};
+
