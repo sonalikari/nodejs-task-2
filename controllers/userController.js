@@ -42,3 +42,15 @@ exports.loginUser = async (req, res) => {
     }
 };
 
+exports.getUserData = async (req, res) => {
+    
+    const accessToken = req.headers['access_token'];
+
+    const user = await User.findById(accessToken);
+
+    if (!user) {
+        return res.status(400).json({ error: 'User not found or invalid access token' });
+    }
+
+    res.json(user);
+};
