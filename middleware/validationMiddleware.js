@@ -10,7 +10,6 @@ exports.validateRegistration = [
         return true;
     }),
     body('email').notEmpty().isEmail(),
-    body('id').notEmpty().isString(),
     body('firstname').notEmpty().isString(),
     body('lastname').notEmpty().isString(),
     (req, res, next) => {

@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 exports.registerUser = async (req, res) => {
     try {
-        const { username, password, confirmPassword, email, id, firstname, lastname } = req.body;
+        const { username, password, confirmPassword, email, firstname, lastname } = req.body;
 
         if (password !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match' });
@@ -15,7 +15,6 @@ exports.registerUser = async (req, res) => {
             username,
             password: hashedPassword,
             email,
-            id,
             firstname,
             lastname
         });
@@ -24,6 +23,6 @@ exports.registerUser = async (req, res) => {
 
         res.status(200).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: "Error occurred! Try Again" });
     }
 };
