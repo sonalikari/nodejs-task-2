@@ -8,7 +8,6 @@ exports.registerUser = async (req, res) => {
         if (password !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match' });
         }
-
         const hashedPassword = await bcrypt.hash(password, 8); 
 
         const newUser = new User({
@@ -43,14 +42,14 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.getUserData = async (req, res) => {
-    
-    const accessToken = req.headers['access_token'];
-
-    const user = await User.findById(accessToken);
-
-    if (!user) {
-        return res.status(400).json({ error: 'User not found or invalid access token' });
+    try {
+        const accessToken = req.headers['access_token'];
+        const user = await User.findById(accessToken);
+        if (!user) {
+            return res.status(400).json({ error: 'User not found or invalid access token' });
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: 'An error while fetching user data' });
     }
-
-    res.json(user);
 };
