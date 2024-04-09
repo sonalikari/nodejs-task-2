@@ -9,5 +9,6 @@ router.post('/register', validationMiddleware.validateRegistration, userControll
 router.post('/login', validationMiddleware.validateLogin, userController.loginUser);
 
 router.get('/get', authMiddleware.validateAccessToken, userController.getUserData);
+router.put('/delete', authMiddleware.validateAccessToken, userController.deleteUserData);
 
 module.exports = router;

@@ -53,3 +53,17 @@ exports.getUserData = async (req, res) => {
         res.status(500).json({ error: 'An error while fetching user data' });
     }
 };
+
+exports.deleteUserData = async (req, res) => {
+    try {
+        const accessToken = req.headers['access_token'];
+        const user = await User.findById(accessToken);
+        if (!user) {
+            return res.status(400).json({ error: 'User not found or invalid access token' });
+        }
+        await User.findByIdAndDelete(accessToken);
+        res.json({ message: 'User deleted' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error while deleting user data' });
+    }
+};
