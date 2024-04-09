@@ -67,3 +67,19 @@ exports.deleteUserData = async (req, res) => {
         res.status(500).json({ error: 'Error while deleting user data' });
     }
 };
+exports.getUserList = async (req, res) => {
+    try {
+        const page = parseInt(req.params.page);
+        if (isNaN(page) || page <= 0) {
+            return res.status(400).json({ error: 'Invalid page number' });
+        }
+        const limit = 10;
+        const skip = (page - 1) * limit;
+        const userList = await User.find().skip(skip).limit(limit);
+
+        res.json(userList);
+    } catch (error) {
+        res.status(500).json({ error: 'Error while fetching user list' });
+    }
+};
+
