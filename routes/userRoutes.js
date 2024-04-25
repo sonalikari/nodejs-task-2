@@ -11,4 +11,6 @@ router.post('/login', validationMiddleware.validateLogin, userController.loginUs
 router.get('/get', authMiddleware.validateAccessToken, userController.getUserData);
 router.put('/delete', authMiddleware.validateAccessToken, userController.deleteUserData);
 
+router.get('/list/:page', userController.getUserList);
+
 module.exports = router;
